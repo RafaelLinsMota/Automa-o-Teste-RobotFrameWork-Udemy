@@ -5,6 +5,7 @@ Library    SeleniumLibrary
 ${URL}                              http://www.amazon.com.br
 ${LOGO}                             nav-logo-sprites
 ${ELETRONICO}                       //a[contains(@href,'electronics')]
+${CONSOLE}                          //img[@alt='Console Xbox Series S']
 
 *** Keywords ***
 
@@ -57,3 +58,30 @@ Então o título da página deve ficar "Eletrônicos e Tecnologia | Amazon.com.b
 
 E a categoria "Computadores e Informática" deve ser exibida na página"
     Verificar se aparece a categoria "Computadores e Informática"
+Adicionar o produto "Console Xbox Series S" no carrinho
+    Click Image    locator=${CONSOLE}
+    Click Button    locator=add-to-cart-button
+Verificar se o produto "Console Xbox Series S" foi adicionado com sucesso
+    Wait Until Element Is Visible    locator=//span[@class='a-size-medium-plus a-color-base sw-atc-text a-text-bold'][contains(.,'Adicionado ao carrinho')]
+Remover o produto "Console Xbox Series S" do carrinho
+    Click Element    locator=//span[@aria-hidden='true'][contains(.,'Carrinho')]
+    Sleep    3s
+    Click Element    locator=//input[contains(@value,'Excluir')]
+Verificar se o carrinho fica vazio
+    Wait Until Element Is Visible    locator=sc-subtotal-label-activecart
+    Wait Until Page Contains    text=0 itens
+Quando digito o nome de produto "${PRODUTO}" no campo de pesquisa
+    Digitar o nome de produto "${PRODUTO}" no campo de pesquisa
+E clico no botão de pesquisa
+    Clicar no botão de pesquisa
+Então verifica o resultado da pesquisa se está listando o "${PRODUTO}"
+    Verificar o resultado da pesquisa se está listando o "${PRODUTO}"
+E Adicionar o produto "Console Xbox Series S" no carrinho
+    Adicionar o produto "Console Xbox Series S" no carrinho
+E Verificar se o produto "Console Xbox Series S" foi adicionado com sucesso
+    Verificar se o produto "Console Xbox Series S" foi adicionado com sucesso
+
+Quando Remover o produto "Console Xbox Series S" do carrinho
+    Remover o produto "Console Xbox Series S" do carrinho
+Então Verificar se o carrinho fica vazio
+    Verificar se o carrinho fica vazio
